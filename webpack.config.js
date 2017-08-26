@@ -1,18 +1,31 @@
 const webpack = require('webpack');
-const { resolve } = require('path');
+const { resolve, join } = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    styles: 'assets/styles/index.scss',
-    app: ['jquery', 'assets/js/app.js']
+    app: ['jquery', 'app.js', 'index.scss']
   },
 
   output: {
     filename: '[name].js',
-    path: resolve(__dirname, 'public'),
-    publicPath: '/public/',
+    path: resolve(__dirname, 'public/build'),
+    publicPath: '/',
     pathinfo: false
+  },
+
+  resolve: {
+    extensions: ['.scss', '.pug', '.js'],
+    modules: [
+      resolve(__dirname, 'assets/styles'),
+      resolve(__dirname, 'assets/js'),
+      resolve(__dirname, 'templates'),
+      'node_modules'
+    ]
+  },
+
+  resolveLoader: {
+    modules: ['node_modules']
   },
 
   module: {
@@ -26,8 +39,9 @@ module.exports = {
         test: /\.(scss|sass|css)$/i,
         use: ExtractTextPlugin.extract({
           use: [
+            { loader: 'css-loader', options: { sourceMap: true } },
             { loader: 'postcss-loader', options: { sourceMap: true } },
-            { loader: 'sass-loader', options: { sourceMap: true } }
+            { loader: 'sass-loader', options: { sourceMap: true } },
           ]
         })
       },
@@ -58,19 +72,6 @@ module.exports = {
     new ExtractTextPlugin('[name].css')
   ],
 
-  resolve: {
-    extensions: ['.scss', '.pug'],
-    modules: [
-      resolve('assets/styles'),
-      resolve('templates'),
-      'node_modules'
-    ]
-  },
-
-  resolveLoader: {
-    modules: ['node_modules']
-  },
-
   devtool: 'cheap-eval-source-map',
 
   devServer: {
@@ -78,9 +79,9 @@ module.exports = {
     https: false,
     host: '0.0.0.0',
     port: '8080',
-    contentBase: 'public',
-    publicPath: 'public',
-    compress: true,
+    contentBase: join(__dirname, 'public'),
+    publicPath: '/',
+    compress: false,
     headers: {'Access-Control-Allow-Origin': '*'},
     historyApiFallback: true,
     watchOptions: {

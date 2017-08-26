@@ -1,0 +1,7 @@
+plugins:
+  autoprefixer: {}
+  postcss-assets: {
+    loadPaths: ['assets/images'],
+    basePath: '.',
+    cachebuster: true,
+  }
