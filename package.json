@@ -23,6 +23,7 @@
     "css-loader": "^0.28.5",
     "expose-loader": "^0.7.3",
     "extract-text-webpack-plugin": "^2.1.2",
+    "html-webpack-plugin": "^2.30.1",
     "node-sass": "^4.5.3",
     "postcss-assets": "4.1.0",
     "postcss-loader": "^2.0.5",
@@ -39,6 +40,6 @@
   "author": "alx-khramov",
   "scripts": {
     "start": "node_modules/.bin/webpack-dev-server",
-    "build": "webpack"
+    "build": "node_modules/.bin/webpack"
   }
 }

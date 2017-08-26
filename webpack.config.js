@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const { resolve, join } = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -69,7 +70,11 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin('[name].css')
+    new ExtractTextPlugin('[name].css'),
+    new HtmlWebpackPlugin({
+      filename: '../index.html',
+      template: 'templates/main.pug'
+    })
   ],
 
   devtool: 'cheap-eval-source-map',
